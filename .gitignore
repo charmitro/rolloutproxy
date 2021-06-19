@@ -1,0 +1,8 @@
+rolloutproxy
+rolloutproxy.exe
+rolloutproxy.out
+
+go.sum
+vendor/
+
+.env
