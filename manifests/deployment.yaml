@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rolloutproxy
+spec:
+  selector:
+    matchLabels:
+      app: rolloutproxy
+  template:
+    metadata:
+      labels:
+        app: rolloutproxy
+    spec:
+      containers:
+        - name: rolloutproxy
+          image: quintessential.azurecr.io/rollout-proxy:latest
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: USERNAME
+              value: admin
+            - name: PASSWORD
+              value: 78kRJimNjqCrb2HM
+            - name: INCLUSTER
+              value: "TRUE"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rolloutproxy
+spec:
+  selector:
+    app: rolloutproxy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer

@@ -6,6 +6,9 @@
 
 This service is for restarting k8s Deployments from inside the cluster either for CICD purposes or your Cluster is Private
 
+### Endpoints
+* `/<deployment>/<namespace>`
+
 # Environment Variables
 
 `USERNAME`: string, required: Username for Basic Auth
