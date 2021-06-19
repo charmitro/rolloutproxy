@@ -3,10 +3,6 @@
 **Rollout Restart Kubernetes Deployments from inside a k8s cluster**
 
 # Usage
-
-This service is for restarting k8s Deployments from inside the cluster either for CICD purposes or your Cluster is Private
-
-### Endpoints
 * `/<deployment>/<namespace>`
 
 # Environment Variables
