@@ -47,9 +47,9 @@ func Init() {
 	}
 }
 
-// BasicRollout scale deployment replicas to 0 and re-scale
+// RolloutRestart scale deployment replicas to 0 and re-scale
 // it back to its initial replicas
-func BasicRollout(deployment, namespace string) error {
+func RolloutRestart(deployment, namespace string) error {
 	deploymentsClient := clientset.AppsV1().Deployments(namespace)
 
 	_deployment, err := deploymentsClient.Get(context.TODO(), deployment, v1.GetOptions{})

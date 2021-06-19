@@ -9,9 +9,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func simpleRollout(c *gin.Context) {
+func basicRollout(c *gin.Context) {
 	if c.Param("deployment") != "" && c.Param("namespace") != "" {
-		if err := cluster.BasicRollout(
+		if err := cluster.RolloutRestart(
 			c.Param("deployment"),
 			c.Param("namespace"),
 		); err != nil {
@@ -41,7 +41,7 @@ func Init() {
 		os.Getenv("USERNAME"): os.Getenv("PASSWORD"),
 	}))
 
-	auth.POST("/:deployment/:namespace", simpleRollout)
+	auth.POST("/:deployment/:namespace", basicRollout)
 
 	r.Run()
 }
