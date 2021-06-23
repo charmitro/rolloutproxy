@@ -5,6 +5,7 @@ import (
 	"flag"
 	"os"
 	"path/filepath"
+	"time"
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -62,6 +63,8 @@ func RolloutRestart(deployment, namespace string) error {
 	if _, err := deploymentsClient.Update(context.TODO(), _deployment, v1.UpdateOptions{}); err != nil {
 		return err
 	}
+
+	time.Sleep(5000)
 
 	_deployment, err = deploymentsClient.Get(context.TODO(), deployment, v1.GetOptions{})
 	if err != nil {
