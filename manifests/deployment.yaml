@@ -22,21 +22,22 @@ spec:
             - containerPort: 8080
           env:
             - name: USERNAME
-              value: admin
+              valueFrom:
+                secretKeyRef:
+                  name: rolloutproxy-secrets
+                  key: USERNAME
             - name: PASSWORD
-              value: 78kRJimNjqCrb2HM
+              valueFrom:
+                secretKeyRef:
+                  name: rolloutproxy-secrets
+                  key: PASSWORD
             - name: INCLUSTER
               value: "TRUE"
 ---
 apiVersion: v1
-kind: Service
+kind: Secret
 metadata:
-  name: rolloutproxy
-spec:
-  selector:
-    app: rolloutproxy
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
-  type: LoadBalancer
+  name: rolloutproxy-secrets
+data:
+  USERNAME: YWRtaW4=
+  PASSWORD: NzhrUkppbU5qcUNyYjJITQ==
