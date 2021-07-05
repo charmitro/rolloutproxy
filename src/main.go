@@ -1,6 +1,5 @@
 package main
 
-
 import (
 	"github.com/charmitro/rolloutproxy/src/pkg/server"
 )

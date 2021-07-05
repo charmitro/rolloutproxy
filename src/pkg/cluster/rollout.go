@@ -5,7 +5,6 @@ import (
 	"flag"
 	"os"
 	"path/filepath"
-	"time"
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -58,25 +57,14 @@ func RolloutRestart(deployment, namespace string) error {
 		return err
 	}
 
-	temp_replicas := _deployment.Spec.Replicas // save initial replicas
-	_deployment.Spec.Replicas = int32p(0)
-	if _, err := deploymentsClient.Update(context.TODO(), _deployment, v1.UpdateOptions{}); err != nil {
-		return err
-	}
+	_deployment.Spec.Template.Annotations["updated"] = v1.Now().String()
 
-	time.Sleep(5000)
-
-	_deployment, err = deploymentsClient.Get(context.TODO(), deployment, v1.GetOptions{})
-	if err != nil {
-		return err
-	}
-
-	_deployment.Spec.Replicas = temp_replicas // re-scale to `temp_replicas`
 	if _, err := deploymentsClient.Update(context.TODO(), _deployment, v1.UpdateOptions{}); err != nil {
 		return err
 	}
 
 	return nil
+
 }
 
 func int32p(i int32) *int32 {
